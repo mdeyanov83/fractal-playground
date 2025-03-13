@@ -1,0 +1,5 @@
+channels
+daphne
+numpy
+pillow
+websockets

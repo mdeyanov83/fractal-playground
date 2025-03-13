@@ -1,0 +1,38 @@
+{% extends "mandelbrot/layout.html" %}
+
+{% load static %}
+
+
+{% block body %}
+
+    <div class="card profile-card rectangle navigation-bar" style="max-width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">User Profile</h5>
+            <p class="card-text">Username: {{ current_user.username }}</p>
+            <p class="card-text">Email address: {{ current_user.email }}</p>
+            <p class="card-text">Total favorite views: {{ current_user.total_favorite_views }}</p>
+        </div>
+    </div>
+
+    <hr>
+    <div id="post-list-header" class="card rectangle navigation-bar" style="max-width: 40rem;">
+        <div class="card-header">
+            <h4>Favorite Views</h4>
+        </div>
+        <div class="card-body">
+        {% for view in current_user.favorite_views %}
+            <p class="saved-view-item">
+                {{ view.name }}: X:{{ view.center_x}}, Y:{{ view.center_y }}
+                <button class="delete-btn" data-view_id="{{ view.id }}">X</button>
+            </p>
+
+        {% endfor %}
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'mandelbrot/user_profile.js' %}"></script>
+{% endblock %}

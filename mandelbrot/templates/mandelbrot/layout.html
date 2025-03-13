@@ -1,0 +1,126 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token }}">
+        <title>Fractal Playground</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'mandelbrot/styles.css' %}">
+        <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+        {% block head %}
+        {% endblock %}
+    </head>
+
+    <body>
+        <div class="rectangle navigation-bar">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="{% url 'index' %}">Fractal Playground</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Popular Views
+                                </a>
+                                <ul id="popular-views-list" class="dropdown-menu">
+                                    {% for view in popular_views %}
+                                        <li class="dropdown-item saved-view-item"
+                                            data-x="{{ view.center_x }}"
+                                            data-y="{{ view.center_y }}"
+                                            data-zoom="{{ view.zoom }}"
+                                            data-iter="{{ view.max_iterations }}">
+                                            {{ view.name }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            {% if user.is_authenticated %}
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Favourite Views
+                                    </a>
+                                    <ul id="favorite-views-list" class="dropdown-menu">
+                                        {% for view in current_user.favorite_views %}
+                                            <li class="dropdown-item saved-view-item"
+                                                data-x="{{ view.center_x }}"
+                                                data-y="{{ view.center_y }}"
+                                                data-zoom="{{ view.zoom }}"
+                                                data-iter="{{ view.max_iterations }}">
+                                                {{ view.name }}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            <li class="nav-item">
+                                <!-- Button trigger modal -->
+                                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#instructionsModal">
+                                    Instructions
+                                </a>
+                                <!-- Modal -->
+                                <div class="modal fade" id="instructionsModal" tabindex="-1" aria-labelledby="instructionsModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="instructionsModalLabel">Instructions</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Welcome to the Mandelbrot and Julia sets visualizer. For full functionality, please <strong>register</strong> and <strong>log in</strong>.
+                                                <hr>
+                                                In the navigation bar the user can choose from pre-saved <strong>"Popular Views"</strong> or personal <strong>"Favorite Views"</strong> (login required).
+                                                <hr>
+                                                On the user's own <strong>username</strong> account page, they can see the account details and list of saved views. When hoviering over a veiew, the user can delete it by clicking the red <stong style="color: white; background-color: red;">X</stong> button.
+                                                <hr>
+                                                On the main page in the control panel, the sliders dynamically update the max iterations for either the Mandelbrot or the Julia set visualizer.
+                                                <hr>
+                                                <strong>Save View</strong> (login requried) - allows the user to save their current view of the mandelbrot set for future reference.
+                                                <hr>
+                                                <strong>Request Render</strong> (login required) - the user can request a high resolution image render the current view of the Mandelbrot set. The image is rendered on the backend, while at the same time the application remains responsive. A progress bar appears under the button while rendering.
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            {% if user.is_authenticated %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'user_profile' %}"><strong>{{ user.username }}</strong></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                                </li>
+                            {% endif %}
+
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        {% block body %}
+        {% endblock %}
+
+        {% block script %}
+        {% endblock %}
+        <!-- pass JSON data to Javascript  Not used-->
+        <!-- {{ current_user | default:"{}" | json_script:"current-user-data" }} -->
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </body>
+</html>

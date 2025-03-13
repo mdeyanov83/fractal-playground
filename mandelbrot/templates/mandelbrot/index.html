@@ -1,0 +1,124 @@
+{% extends "mandelbrot/layout.html" %}
+
+{% load static %}
+
+{% block body %}
+    <div class="main-container d-inline-flex flex-wrap">
+        <div class="rectangle">
+            <canvas id="main-canvas"></canvas>
+        </div>
+
+        <div class="right-container">
+            <div class="rectangle controls-main">
+                <div class="controls-div">
+                    <span> Max iterations:</span>
+                    <input type="range" min="1" max="1500" value="1" id="iters-slider">
+                    <input type="number" min="1" max="1500" value="1" id="iters-input">
+                </div>
+                <div class="controls-div split-vertical">
+                    <div>
+                        <strong>Details at:</strong>
+                        <span id="details-source"></span>
+                        <br>
+                        <span>&nbsp;Re (X): </span>
+                        <span id="x-pos-text"></span>
+                        <br>
+                        <span>&nbsp;Im (Y): </span>
+                        <span id="y-pos-text"></span>
+                        <br>
+                        <span>&nbsp;Iteration count: </span>
+                        <span id="iter-count-text"></span>
+                        <br>
+                        <span>&nbsp;Zoom: </span>
+                        <span id="zoom-text"></span>
+                        <br>
+
+                        {% if user.is_authenticated %}
+                            <!-- modal start -->
+                            <!-- Button trigger modal -->
+                            <button type="button" class="" data-bs-toggle="modal" data-bs-target="#saveViewModal">
+                                Save View
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="saveViewModal" tabindex="-1" aria-labelledby="saveViewModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="saveViewModalLabel">Save current view</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <textarea class="form-control"name="view-name" id="view-name" rows="1"  required placeholder="New view name..."></textarea>
+                                            <div id="view-name-error" class="mb-3" style="color: red"></div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close-save-view">Close</button>
+                                            <button type="button" class="btn btn-primary" id="save-view">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- modal end -->
+                        {% endif %}
+
+                    </div>
+                    <div>
+                        <strong>Julia set</strong>
+                        <p>Max iterations: <span id="iters-value-julia">1</span></p>
+                        <input type="range" min="1" max="150" value="1" id="iters-slider-julia">
+                        <hr>
+                        {% if user.is_authenticated %}
+                            <button id="request-render">Request Render</button>
+
+                            <!-- Download link modal -->
+                            <button type="button" id="save-render-button" data-bs-toggle="modal" data-bs-target="#saveRenderModal" hidden></button>
+                            <div class="modal fade" id="saveRenderModal" tabindex="-1" aria-labelledby="saveRenderModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="saveRenderModalLabel">Image ready, click the link to download...</h1>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div id="link-placeholder" class="mb-3">
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancel-render-button">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- modal end -->
+
+                            <div id="progress-container" style="width: 100%; background: #ddd;">
+                                <div id="progress-bar" style="width: 0%; height: 15px; background: green; display: none"></div>
+                            </div>
+                            <p id="progress-text" style="display :none">0%</p>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="rectangle">
+                <canvas id="julia-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <!-- A little error output in the HTML during development -->
+    <div id="error-box">
+        <span class="error-box-title">Error messages, if any, go in here.</span>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script type="modele" src="{% static 'mandelbrot/main.js' %}"></script>
+    <script type="module" src="{% static 'mandelbrot/secondary.js' %}"></script>
+{% endblock %}
+
+

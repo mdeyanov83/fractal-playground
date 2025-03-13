@@ -1,0 +1,93 @@
+body{
+    padding: 25px;
+    background-color: #353535
+}
+
+#main-canvas{
+    display: block;
+    width: 800px;
+    height: 600px;
+    /*
+     * WebGL trick: pick an offensive canvas background color
+     * to make it obvious when WebGL isn't drawing to the
+     * whole canvas, or there's unexpected transparency.
+     */
+    /* background-color: #da6052; */
+}
+#julia-canvas{
+    display: block;
+    width: 400px;
+    height: 300px;
+}
+
+/* CSS to make a nice little error box output for debugging */
+#error-box {
+    color: #fd8080;
+    font-weight: 500;
+    font-size: 18pt;
+    border: 1px solid white;
+    padding: 25px;
+    margin-top: 20px;
+}
+
+.error-box-title {
+    color: #eee;
+}
+
+.main-container {
+    /* display: flex; */
+    margin: 10px;
+    gap: 30px;
+    /* justify-content: flex-start; */
+}
+
+.rectangle {
+    border: 1px solid black;
+    outline: 4px solid lightgray;
+}
+.controls-main {
+    background-color: #cef;
+    margin-bottom: 30px
+
+}
+.controls-div {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.right-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.split-vertical {
+    display: flex;
+    justify-content: space-between;
+}
+
+.navigation-bar {
+    margin: 10px;
+    margin-bottom: 30px;
+    background-color: #cef;
+}
+
+.saved-view-item:hover {
+    display: inline-block;
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.saved-view-item:hover .delete-btn {
+    opacity: 1; /* Show button when hovered */
+}
+
+.delete-btn {
+
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+    opacity: 0; /* Hidden by default */
+}
