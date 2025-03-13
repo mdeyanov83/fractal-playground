@@ -19,6 +19,12 @@ The User profile page allows the user to delete any previously saved Favorite vi
 
 For full functionality please register an account and log in.
 
+A simpler JS only version repository here:
+https://github.com/mdeyanov83/mandelbrot
+
+Online:
+https://mdeyanov83.github.io/mandelbrot/
+
 ## Distinctiveness and Complexity
 ...as well as design choices
 
