@@ -115,7 +115,7 @@ To run the application simply use:
 - __python manage.py runserver__
 
  !!! Notes !!!
-- Daphne server could be used to handle both http request/respons and websockets, however it does not serve static files by default. In order to serve static files there are a number of methods (installing Whitenoise and using collectstatic, using Nginx/Apache server to serve static files, etc.)
+- Daphne server could be used to handle both http request/response and websockets, however it does not serve static files by default. In order to serve static files there are a number of methods (installing Whitenoise and using collectstatic, using Nginx/Apache server to serve static files, etc.)
 - Alternatively both Runserver and Daphne could be run on different ports in separate terminals
     - python manage.py runserver 0.0.0.0:8080
     - daphne -b 0.0.0.0 -p 8000 fractal_playground.asgi:application
