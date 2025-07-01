@@ -60,7 +60,7 @@ Django Channels is used for WebSocket support. It allows the backend to handle n
 
 - Daphne Server
 
-Dahphne server is used to handle support for ASGI applications such as Channels in this case.
+Daphne server is used to handle support for ASGI applications such as Channels in this case.
 
 ## Project Structure / Files
 
