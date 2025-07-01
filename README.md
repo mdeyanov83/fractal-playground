@@ -40,7 +40,7 @@ The rendering windows use HTML5 Canvas elements / WebGL2 context (vertex and fra
 
 - WebSockets
 
-I wanted the user to receive live progress updates when they request a rendered image from the backend. When the user clicks the __Reqeust Render__ button in the control pannel, a WebSocket connection is established with the server. Live updates are send to the front-end and a progress bar is visualized. Once the image is ready, the server transmits the binary image data through the same connection and a window pops up so the user can save the image locally.
+I wanted the user to receive live progress updates when they request a rendered image from the backend. When the user clicks the __Request Render__ button in the control pannel, a WebSocket connection is established with the server. Live updates are send to the front-end and a progress bar is visualized. Once the image is ready, the server transmits the binary image data through the same connection and a window pops up so the user can save the image locally.
 
 __Back End (Server Side)__
 
